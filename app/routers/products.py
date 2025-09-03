@@ -1,3 +1,4 @@
+from app.models.products import ProductSummaryWithImageModel
 from fastapi import APIRouter, HTTPException, UploadFile, File, Form, Query, Depends
 from app.db import get_connection
 from app.models import (
@@ -13,8 +14,11 @@ from app.models import (
     ProductImageResponseModel,
     ApiResponse,
     PaginatedResponse,
+
     SuccessResponse,
-    FileUploadResponse
+
+
+    FileUploadResponse,
 )
 from typing import List, Optional
 import mysql.connector
@@ -24,11 +28,12 @@ from decimal import Decimal
 from datetime import datetime
 
 router = APIRouter(prefix="/products", tags=["products"])
+
 UPLOAD_DIR = "uploads/products"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 # ------------------- GET ALL PRODUCTS -------------------
-@router.get("/", response_model=ApiResponse[PaginatedResponse[ProductSummaryModel]])
+@router.get("/", response_model=ApiResponse[PaginatedResponse[ProductSummaryWithImageModel]])
 def get_products(
     page: int = Query(1, ge=1),
     limit: int = Query(10, ge=1, le=100),
@@ -45,33 +50,51 @@ def get_products(
         # Calculate offset
         offset = (page - 1) * limit
 
-        # Build base queries
-        base_query = "SELECT product_id, category_id, name, description, price, stock, created_at FROM products"
-        count_query = "SELECT COUNT(*) FROM products"
+        # Build base query to get first image (primary first, then any image)
+        base_query = """
+        SELECT
+            p.product_id,
+            p.category_id,
+            p.name,
+            p.description,
+            p.price,
+            p.stock,
+            p.created_at,
+            (
+                SELECT pi.image_url
+                FROM product_images pi
+                WHERE pi.product_id = p.product_id
+                ORDER BY pi.is_primary DESC, pi.image_id ASC
+                LIMIT 1
+            ) as first_image_url
+        FROM products p
+        """
+
+        count_query = "SELECT COUNT(*) FROM products p"
 
         # Build WHERE conditions
         conditions = []
         params = []
 
         if search:
-            conditions.append("(name LIKE %s OR description LIKE %s)")
+            conditions.append("(p.name LIKE %s OR p.description LIKE %s)")
             search_param = f"%{search}%"
             params.extend([search_param, search_param])
 
         if category_id is not None:
-            conditions.append("category_id = %s")
+            conditions.append("p.category_id = %s")
             params.append(category_id)
 
         if min_price is not None:
-            conditions.append("price >= %s")
+            conditions.append("p.price >= %s")
             params.append(min_price)
 
         if max_price is not None:
-            conditions.append("price <= %s")
+            conditions.append("p.price <= %s")
             params.append(max_price)
 
         if in_stock_only:
-            conditions.append("stock > 0")
+            conditions.append("p.stock > 0")
 
         # Add WHERE clause if we have conditions
         where_clause = ""
@@ -83,19 +106,20 @@ def get_products(
         total = cursor.fetchone()[0]
 
         # Get paginated results
-        query = base_query + where_clause + " ORDER BY created_at DESC LIMIT %s OFFSET %s"
+        query = base_query + where_clause + " ORDER BY p.created_at DESC LIMIT %s OFFSET %s"
         cursor.execute(query, params + [limit, offset])
         rows = cursor.fetchall()
 
         products = [
-            ProductSummaryModel(
+            ProductSummaryWithImageModel(
                 product_id=row[0],
                 category_id=row[1],
                 name=row[2],
                 description=row[3],
                 price=row[4],
                 stock=row[5],
-                created_at=row[6]
+                created_at=row[6],
+                first_image_url=row[7]  # The first image URL
             ) for row in rows
         ]
 

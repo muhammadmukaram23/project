@@ -114,3 +114,13 @@ class VariationCreateBulkModel(BaseModel):
     """Model for creating variations in bulk"""
     product_id: int
     variations: List[VariationCreateModel]
+
+
+class ProductSummaryWithImageModel(ProductBase):
+    """Simplified product model with first image for listings"""
+    product_id: int
+    created_at: datetime
+    first_image_url: Optional[str] = None  # Add this field
+
+    class Config:
+        from_attributes = True
