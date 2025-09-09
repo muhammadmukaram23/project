@@ -633,68 +633,111 @@ def delete_order_item(order_id: int, item_id: int):
         cursor.close()
         conn.close()
 
+
 # ------------------- GET ORDERS BY CUSTOMER -------------------
-@router.get("/customer/{customer_id}", response_model=ApiResponse[PaginatedResponse[OrderSummaryModel]])
+@router.get("/customer/{customer_id}", response_model=ApiResponse[PaginatedResponse[OrderResponseModel]])
 def get_orders_by_customer(
     customer_id: int,
     page: int = Query(1, ge=1),
     limit: int = Query(10, ge=1, le=100),
     status: Optional[OrderStatus] = Query(None)
 ):
-    """Get all orders for a specific customer"""
+    """Get all orders for a specific customer with full item details"""
     conn = get_connection()
-    cursor = conn.cursor()
+    cursor = conn.cursor(dictionary=True)
     try:
         # Check if customer exists
-        cursor.execute("SELECT customer_id FROM customers WHERE customer_id = %s", (customer_id,))
-        if not cursor.fetchone():
+        cursor.execute("SELECT customer_id, name, email FROM customers WHERE customer_id = %s", (customer_id,))
+        customer_row = cursor.fetchone()
+        if not customer_row:
             raise HTTPException(status_code=404, detail="Customer not found")
 
         # Calculate offset
         offset = (page - 1) * limit
 
-        # Build query with optional status filter
-        base_query = """
-        SELECT o.order_id, o.customer_id, o.guest_name, o.guest_email,
-               o.total_amount, o.status, o.created_at,
-               COUNT(oi.order_item_id) as items_count
-        FROM orders o
-        LEFT JOIN order_items oi ON o.order_id = oi.order_id
-        WHERE o.customer_id = %s
-        """
-
+        # Build query for counting total orders
         count_query = "SELECT COUNT(*) FROM orders WHERE customer_id = %s"
         params = [customer_id]
-
         if status is not None:
-            base_query += " AND o.status = %s"
             count_query += " AND status = %s"
             params.append(status.value)
 
-        # Get total count
         cursor.execute(count_query, params)
-        total = cursor.fetchone()[0]
+        total = cursor.fetchone()['COUNT(*)']
 
-        # Get paginated results
-        query = base_query + " GROUP BY o.order_id ORDER BY o.created_at DESC LIMIT %s OFFSET %s"
-        cursor.execute(query, params + [limit, offset])
-        rows = cursor.fetchall()
+        if total == 0:
+            paginated_response = PaginatedResponse.create(data=[], total=total, page=page, limit=limit)
+            return ApiResponse.success(data=paginated_response, message=f"No orders found for customer {customer_id}")
 
-        orders = [
-            OrderSummaryModel(
-                order_id=row[0],
-                customer_id=row[1],
-                guest_name=row[2],
-                guest_email=row[3],
-                total_amount=row[4],
-                status=OrderStatus(row[5]),
-                created_at=row[6],
-                items_count=row[7]
-            ) for row in rows
-        ]
+        # Build query for fetching the current page of orders
+        order_query = "SELECT * FROM orders WHERE customer_id = %s"
+        if status is not None:
+            order_query += " AND status = %s"
+
+        order_query += " ORDER BY created_at DESC LIMIT %s OFFSET %s"
+
+        cursor.execute(order_query, params + [limit, offset])
+        order_rows = cursor.fetchall()
+
+        order_ids = [row["order_id"] for row in order_rows]
+
+        # Fetch all items for the retrieved orders in a single query
+        items_by_order = {}
+        if order_ids:
+            items_query = f"""
+                SELECT oi.*, p.name as product_name,
+                       v.attribute_name as variation_name, v.attribute_value as variation_value
+                FROM order_items oi
+                LEFT JOIN products p ON oi.product_id = p.product_id
+                LEFT JOIN variations v ON oi.variation_id = v.variation_id
+                WHERE oi.order_id IN ({','.join(['%s'] * len(order_ids))})
+                ORDER BY oi.order_item_id
+            """
+            cursor.execute(items_query, order_ids)
+            item_rows = cursor.fetchall()
+
+            # Group items by order_id for efficient lookup
+            for item_row in item_rows:
+                order_id = item_row["order_id"]
+                if order_id not in items_by_order:
+                    items_by_order[order_id] = []
+
+                items_by_order[order_id].append(
+                    OrderItemResponseModel(
+                        order_item_id=item_row["order_item_id"],
+                        order_id=item_row["order_id"],
+                        product_id=item_row["product_id"],
+                        variation_id=item_row["variation_id"],
+                        quantity=item_row["quantity"],
+                        price=item_row["price"],
+                        product_name=item_row["product_name"],
+                        variation_name=item_row["variation_name"],
+                        variation_value=item_row["variation_value"]
+                    )
+                )
+
+        # Combine orders with their items
+        orders_with_items = []
+        for order_row in order_rows:
+            order_id = order_row["order_id"]
+            order = OrderResponseModel(
+                order_id=order_id,
+                customer_id=order_row["customer_id"],
+                guest_name=order_row["guest_name"],
+                guest_email=order_row["guest_email"],
+                guest_phone=order_row["guest_phone"],
+                guest_address=order_row["guest_address"],
+                total_amount=order_row["total_amount"],
+                status=OrderStatus(order_row["status"]),
+                created_at=order_row["created_at"],
+                items=items_by_order.get(order_id, []),
+                customer_name=customer_row["name"],
+                customer_email=customer_row["email"]
+            )
+            orders_with_items.append(order)
 
         paginated_response = PaginatedResponse.create(
-            data=orders,
+            data=orders_with_items,
             total=total,
             page=page,
             limit=limit
@@ -702,7 +745,7 @@ def get_orders_by_customer(
 
         return ApiResponse.success(
             data=paginated_response,
-            message=f"Retrieved {len(orders)} orders for customer {customer_id}"
+            message=f"Retrieved {len(orders_with_items)} orders for customer {customer_id}"
         )
 
     except mysql.connector.Error as err:
