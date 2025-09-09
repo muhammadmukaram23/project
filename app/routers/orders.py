@@ -642,7 +642,7 @@ def get_orders_by_customer(
     limit: int = Query(10, ge=1, le=100),
     status: Optional[OrderStatus] = Query(None)
 ):
-    """Get all orders for a specific customer with full item details"""
+    """Get all orders for a specific customer with full item details including first image"""
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
     try:
@@ -655,7 +655,7 @@ def get_orders_by_customer(
         # Calculate offset
         offset = (page - 1) * limit
 
-        # Build query for counting total orders
+        # Count total orders
         count_query = "SELECT COUNT(*) FROM orders WHERE customer_id = %s"
         params = [customer_id]
         if status is not None:
@@ -669,24 +669,29 @@ def get_orders_by_customer(
             paginated_response = PaginatedResponse.create(data=[], total=total, page=page, limit=limit)
             return ApiResponse.success(data=paginated_response, message=f"No orders found for customer {customer_id}")
 
-        # Build query for fetching the current page of orders
+        # Fetch paginated orders
         order_query = "SELECT * FROM orders WHERE customer_id = %s"
         if status is not None:
             order_query += " AND status = %s"
-
         order_query += " ORDER BY created_at DESC LIMIT %s OFFSET %s"
 
         cursor.execute(order_query, params + [limit, offset])
         order_rows = cursor.fetchall()
-
         order_ids = [row["order_id"] for row in order_rows]
 
-        # Fetch all items for the retrieved orders in a single query
+        # Fetch all items for these orders including first_image_url
         items_by_order = {}
         if order_ids:
             items_query = f"""
                 SELECT oi.*, p.name as product_name,
-                       v.attribute_name as variation_name, v.attribute_value as variation_value
+                       v.attribute_name as variation_name, v.attribute_value as variation_value,
+                       (
+                           SELECT pi.image_url
+                           FROM product_images pi
+                           WHERE pi.product_id = p.product_id
+                           ORDER BY pi.is_primary DESC, pi.image_id ASC
+                           LIMIT 1
+                       ) as first_image_url
                 FROM order_items oi
                 LEFT JOIN products p ON oi.product_id = p.product_id
                 LEFT JOIN variations v ON oi.variation_id = v.variation_id
@@ -696,27 +701,27 @@ def get_orders_by_customer(
             cursor.execute(items_query, order_ids)
             item_rows = cursor.fetchall()
 
-            # Group items by order_id for efficient lookup
             for item_row in item_rows:
                 order_id = item_row["order_id"]
                 if order_id not in items_by_order:
                     items_by_order[order_id] = []
 
                 items_by_order[order_id].append(
-                    OrderItemResponseModel(
-                        order_item_id=item_row["order_item_id"],
-                        order_id=item_row["order_id"],
-                        product_id=item_row["product_id"],
-                        variation_id=item_row["variation_id"],
-                        quantity=item_row["quantity"],
-                        price=item_row["price"],
-                        product_name=item_row["product_name"],
-                        variation_name=item_row["variation_name"],
-                        variation_value=item_row["variation_value"]
-                    )
-                )
+    OrderItemResponseModel(
+        order_item_id=item_row["order_item_id"],
+        order_id=item_row["order_id"],
+        product_id=item_row["product_id"],
+        variation_id=item_row["variation_id"],
+        quantity=item_row["quantity"],
+        price=item_row["price"],
+        product_name=item_row["product_name"],
+        variation_name=item_row["variation_name"],
+        variation_value=item_row["variation_value"],
+        first_image_url=item_row.get("first_image_url")  # <- now included
+    )
+)
 
-        # Combine orders with their items
+        # Combine orders with items
         orders_with_items = []
         for order_row in order_rows:
             order_id = order_row["order_id"]
@@ -748,7 +753,7 @@ def get_orders_by_customer(
             message=f"Retrieved {len(orders_with_items)} orders for customer {customer_id}"
         )
 
-    except mysql.connector.Error as err:
+    except Exception as err:
         raise HTTPException(status_code=500, detail=f"Database error: {err}")
     finally:
         cursor.close()

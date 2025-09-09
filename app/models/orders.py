@@ -43,9 +43,11 @@ class OrderItemResponseModel(OrderItemBase):
     product_name: Optional[str] = None
     variation_name: Optional[str] = None
     variation_value: Optional[str] = None
+    first_image_url: Optional[str] = None  # <- Add this field
 
     class Config:
         from_attributes = True
+
 
 
 class OrderBase(BaseModel):
