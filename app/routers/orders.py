@@ -127,14 +127,21 @@ def get_order(order_id: int):
 
         # Get order items with product information
         cursor.execute("""
-            SELECT oi.*, p.name as product_name,
-                   v.attribute_name as variation_name, v.attribute_value as variation_value
-            FROM order_items oi
-            LEFT JOIN products p ON oi.product_id = p.product_id
-            LEFT JOIN variations v ON oi.variation_id = v.variation_id
-            WHERE oi.order_id = %s
-            ORDER BY oi.order_item_id
-        """, (order_id,))
+                SELECT oi.*, p.name as product_name,
+                    v.attribute_name as variation_name, v.attribute_value as variation_value,
+                    (
+                        SELECT pi.image_url
+                        FROM product_images pi
+                        WHERE pi.product_id = p.product_id
+                        ORDER BY pi.is_primary DESC, pi.image_id ASC
+                        LIMIT 1
+                    ) as first_image_url
+                FROM order_items oi
+                LEFT JOIN products p ON oi.product_id = p.product_id
+                LEFT JOIN variations v ON oi.variation_id = v.variation_id
+                WHERE oi.order_id = %s
+                ORDER BY oi.order_item_id
+            """, (order_id,))
         item_rows = cursor.fetchall()
 
         items = [
@@ -147,9 +154,13 @@ def get_order(order_id: int):
                 price=row["price"],
                 product_name=row["product_name"],
                 variation_name=row["variation_name"],
-                variation_value=row["variation_value"]
+                variation_value=row["variation_value"],
+                first_image_url=row["first_image_url"]
+              
+                
             ) for row in item_rows
         ]
+        
 
         # Get customer information if applicable
         customer_name = None
@@ -177,6 +188,7 @@ def get_order(order_id: int):
             items=items,
             customer_name=customer_name,
             customer_email=customer_email
+            
         )
 
         return ApiResponse.success(
