@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Form, Query
+from fastapi import APIRouter, HTTPException, Form, Query,Depends
 from app.db import get_connection
 from app.models import (
     OrderCreateModel,
@@ -16,12 +16,13 @@ from app.models import (
     SuccessResponse,
     MessageResponse
 )
+from app.auth.auth import verify_token
 from typing import List, Optional
 import mysql.connector
 from decimal import Decimal
 from datetime import datetime
 
-router = APIRouter(prefix="/orders", tags=["orders"])
+router = APIRouter(prefix="/orders", tags=["orders"],dependencies=[Depends(verify_token)])
 
 # ------------------- GET ALL ORDERS -------------------
 @router.get("/", response_model=ApiResponse[PaginatedResponse[OrderSummaryModel]])

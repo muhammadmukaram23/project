@@ -77,6 +77,31 @@ CREATE TABLE order_items (
     FOREIGN KEY (variation_id) REFERENCES variations(variation_id) ON DELETE SET NULL
 );
 
+
+CREATE TABLE Contact (
+    contact_id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id INT NULL,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(150) NOT NULL,
+    phone VARCHAR(20) NOT NULL,
+    message TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (customer_id) REFERENCES customers(customer_id) ON DELETE SET NULL
+);
+
+
+
+CREATE TABLE REVIEWS (
+    review_id INT AUTO_INCREMENT PRIMARY KEY,
+    product_id INT NOT NULL,
+    customer_id INT NOT NULL,
+    rating INT NOT NULL,
+    comment TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE CASCADE,
+    FOREIGN KEY (customer_id) REFERENCES customers(customer_id) ON DELETE CASCADE
+);
+
 -- Insert Customers
 INSERT INTO customers (name, email, password, phone, address) VALUES
 ('John Doe', 'john@example.com', 'password', '1234567890', '123 Main St, New York, USA'),

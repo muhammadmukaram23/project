@@ -20,6 +20,7 @@ from app.models import (
 
     FileUploadResponse,
 )
+from app.auth.auth import verify_token
 from typing import List, Optional
 import mysql.connector
 import os
@@ -27,7 +28,7 @@ import shutil
 from decimal import Decimal
 from datetime import datetime
 
-router = APIRouter(prefix="/products", tags=["products"])
+router = APIRouter(prefix="/products", tags=["products"],dependencies=[Depends(verify_token)])
 
 UPLOAD_DIR = "uploads/products"
 os.makedirs(UPLOAD_DIR, exist_ok=True)

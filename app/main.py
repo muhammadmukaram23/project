@@ -6,6 +6,8 @@ from app.routers import customers
 from app.routers import catagory
 from app.routers import products
 from app.routers import orders
+from app.routers import contactus
+from app.routers import review
 
 app = FastAPI(
     title="Ecom API",
@@ -30,3 +32,5 @@ app.include_router(customers.router)
 app.include_router(catagory.router)
 app.include_router(products.router)
 app.include_router(orders.router)
+app.include_router(contactus.router)
+app.include_router(review.router)

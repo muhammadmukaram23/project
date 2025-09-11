@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, status, Query
+from fastapi import APIRouter, HTTPException, status, Query,Depends
 from app.db import get_connection
 from app.models import (
     CustomerCreateModel,
@@ -12,6 +12,7 @@ from app.models import (
     PaginatedResponse,
     SuccessResponse
 )
+from app.auth.auth import verify_token
 from typing import List, Optional
 import mysql.connector
 
@@ -19,7 +20,7 @@ router = APIRouter(prefix="/customers", tags=["customers"])
 
 
 # ------------------- GET ALL WITH PAGINATION -------------------
-@router.get("/", response_model=ApiResponse[PaginatedResponse[CustomerSummaryModel]])
+@router.get("/", response_model=ApiResponse[PaginatedResponse[CustomerSummaryModel]],dependencies=[Depends(verify_token)])
 def get_customers(
     page: int = Query(1, ge=1),
     limit: int = Query(10, ge=1, le=100),

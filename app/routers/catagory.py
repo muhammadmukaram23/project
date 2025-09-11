@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException, Query,Depends
 from app.db import get_connection
 from app.models import (
     CategoryCreateModel,
@@ -11,9 +11,10 @@ from app.models import (
     MessageResponse
 )
 from typing import List, Optional
+from app.auth.auth import verify_token
 import mysql.connector
 
-router = APIRouter(prefix="/categories", tags=["categories"])
+router = APIRouter(prefix="/categories", tags=["categories"], dependencies=[Depends(verify_token)])
 
 
 # ------------------- GET ALL CATEGORIES -------------------
