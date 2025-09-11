@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - GreenStyle</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#44b50c',
+                        'primary-dark': '#3a9a0a',
+                        'primary-light': '#5cc916',
+                        'primary-50': '#f0fcec',
+                        'primary-100': '#dcf7d0',
+                        'primary-200': '#bef0a6',
+                        'primary-500': '#44b50c',
+                        'primary-600': '#3a9a0a',
+                        'primary-700': '#2f7f08'
+                    },
+                    fontFamily: {
+                        'urbanist': ['Urbanist', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-urbanist bg-gray-50">
+    
+    <!-- Navigation Bar -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50 border-b border-gray-100">
+        <div class="container mx-auto px-6">
+            <div class="flex justify-between items-center py-4">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
+                        <i data-feather="shopping-bag" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <span class="text-2xl font-bold text-gray-800">GreenStyle</span>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden lg:flex items-center space-x-8">
+                    <a href="#" class="text-gray-700 hover:text-primary transition-colors font-medium">Home</a>
+                    
+                    <!-- Clothing Dropdown -->
+                    <div class="relative group">
+                        <button class="flex items-center text-gray-700 hover:text-primary transition-colors font-medium">
+                            Clothing
+                            <i data-feather="chevron-down" class="w-4 h-4 ml-1 group-hover:rotate-180 transition-transform"></i>
+                        </button>
+                        <div class="absolute top-full left-0 mt-2 w-64 bg-white rounded-xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                            <div class="p-4">
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <h3 class="font-semibold text-gray-900 mb-2">Men's</h3>
+                                        <ul class="space-y-1">
+                                            <li><a href="#" class="text-sm text-gray-600 hover:text-primary">T-Shirts</a></li>
+                                            <li><a href="#" class="text-sm text-gray-600 hover:text-primary">Jeans</a></li>
+                                            <li><a href="#" class="text-sm text-gray-600 hover:text-primary">Jackets</a></li>
+                                            <li><a href="#" class="text-sm text-gray-600 hover:text-primary">Suits</a></li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-semibold text-gray-900 mb-2">Women's</h3>
+                                        <ul class="space-y-1">
+                                            <li><a href="#" class="text-sm text-gray-600 hover:text-primary">Dresses</a></li>
+                                            <li><a href="#" class="text-sm text-gray-600 hover:text-primary">Tops</a></li>
+                                            <li><a href="#" class="text-sm text-gray-600 hover:text-primary">Skirts</a></li>
+                                            <li><a href="#" class="text-sm text-gray-600 hover:text-primary">Coats</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <a href="#" class="text-gray-700 hover:text-primary transition-colors font-medium">About Us</a>
+                    <a href="#" class="text-gray-700 hover:text-primary transition-colors font-medium">Contact Us</a>
+                </div>
+                
+                <!-- Icons & Actions -->
+                <div class="flex items-center space-x-4">
+                    <!-- Wishlist -->
+                    <div class="relative">
+                        <button class="p-2 text-gray-700 hover:text-primary transition-colors">
+                            <i data-feather="heart" class="w-6 h-6"></i>
+                        </button>
+                        <span class="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
+                    </div>
+                    
+                    <!-- Cart Dropdown -->
+                    <div class="relative group">
+                        <button class="p-2 text-gray-700 hover:text-primary transition-colors">
+                            <i data-feather="shopping-cart" class="w-6 h-6"></i>
+                        </button>
+                        <span class="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">2</span>
+                        
+                        <!-- Cart Dropdown Modal -->
+                        <div class="absolute top-full right-0 mt-2 w-80 bg-white rounded-xl shadow-2xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                            <div class="p-6">
+                                <h3 class="font-bold text-lg mb-4">Shopping Cart</h3>
+                                
+                                <!-- Cart Items -->
+                                <div class="space-y-4 mb-4">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center">
+                                            <i data-feather="image" class="w-6 h-6 text-gray-400"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h4 class="font-semibold text-sm">Cotton T-Shirt</h4>
+                                            <p class="text-gray-600 text-sm">Size: M, Color: Blue</p>
+                                            <p class="text-primary font-bold">$29.99</p>
+                                        </div>
+                                        <button class="text-gray-400 hover:text-red-500">
+                                            <i data-feather="x" class="w-4 h-4"></i>
+                                        </button>
+                                    </div>
+                                    
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center">
+                                            <i data-feather="image" class="w-6 h-6 text-gray-400"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h4 class="font-semibold text-sm">Denim Jacket</h4>
+                                            <p class="text-gray-600 text-sm">Size: L, Color: Dark Blue</p>
+                                            <p class="text-primary font-bold">$79.99</p>
+                                        </div>
+                                        <button class="text-gray-400 hover:text-red-500">
+                                            <i data-feather="x" class="w-4 h-4"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="border-t pt-4">
+                                    <div class="flex justify-between items-center mb-4">
+                                        <span class="font-semibold">Total:</span>
+                                        <span class="font-bold text-lg text-primary">$109.98</span>
+                                    </div>
+                                    <button class="w-full bg-primary text-white py-3 rounded-lg font-semibold hover:bg-primary-dark transition-colors">
+                                        View Cart
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- User Account -->
+                    <button class="p-2 text-gray-700 hover:text-primary transition-colors">
+                        <i data-feather="user" class="w-6 h-6"></i>
+                    </button>
+                    
+                    <!-- Mobile Menu Toggle -->
+                    <button class="lg:hidden p-2 text-gray-700 hover:text-primary transition-colors">
+                        <i data-feather="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- Checkout Content -->
+    <section class="py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid lg:grid-cols-3 gap-12">
+                
+                <!-- Order Summary -->
+                <div class="lg:col-span-1">
+                    <div class="bg-white rounded-2xl shadow-lg p-8 sticky top-24">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                            <i data-feather="shopping-cart" class="w-6 h-6 mr-3 text-primary"></i>
+                            Order Summary
+                        </h2>
+                        
+                        <!-- Product Items -->
+                        <div class="space-y-6 mb-6">
+                            <!-- Product 1 -->
+                            <div class="flex items-start space-x-4 p-4 bg-gray-50 rounded-xl">
+                                <div class="w-20 h-20 bg-gradient-to-br from-gray-200 to-gray-300 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i data-feather="image" class="w-8 h-8 text-gray-400"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="font-semibold text-gray-900 mb-1">Cotton T-Shirt</h3>
+                                    <div class="text-sm text-gray-600 space-y-1">
+                                        <p>Size: <span class="font-medium">Medium</span></p>
+                                        <p>Color: <span class="font-medium">Navy Blue</span></p>
+                                        <p>Quantity: <span class="font-medium">2</span></p>
+                                    </div>
+                                    <div class="flex items-center justify-between mt-3">
+                                        <span class="text-lg font-bold text-primary">$59.98</span>
+                                        <span class="text-sm text-gray-500">$29.99 each</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Product 2 -->
+                            <div class="flex items-start space-x-4 p-4 bg-gray-50 rounded-xl">
+                                <div class="w-20 h-20 bg-gradient-to-br from-blue-200 to-blue-300 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i data-feather="image" class="w-8 h-8 text-blue-400"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="font-semibold text-gray-900 mb-1">Denim Jacket</h3>
+                                    <div class="text-sm text-gray-600 space-y-1">
+                                        <p>Size: <span class="font-medium">Large</span></p>
+                                        <p>Color: <span class="font-medium">Dark Blue</span></p>
+                                        <p>Quantity: <span class="font-medium">1</span></p>
+                                    </div>
+                                    <div class="flex items-center justify-between mt-3">
+                                        <span class="text-lg font-bold text-primary">$79.99</span>
+                                        <span class="text-sm text-red-500 line-through">$99.99</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Product 3 -->
+                            <div class="flex items-start space-x-4 p-4 bg-gray-50 rounded-xl">
+                                <div class="w-20 h-20 bg-gradient-to-br from-green-200 to-green-300 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i data-feather="image" class="w-8 h-8 text-green-400"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="font-semibold text-gray-900 mb-1">Wool Sweater</h3>
+                                    <div class="text-sm text-gray-600 space-y-1">
+                                        <p>Size: <span class="font-medium">Medium</span></p>
+                                        <p>Color: <span class="font-medium">Forest Green</span></p>
+                                        <p>Quantity: <span class="font-medium">1</span></p>
+                                    </div>
+                                    <div class="flex items-center justify-between mt-3">
+                                        <span class="text-lg font-bold text-primary">$89.99</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Order Totals -->
+                        <div class="border-t pt-6">
+                            <div class="space-y-3">
+                                <div class="flex justify-between text-gray-600">
+                                    <span>Subtotal (4 items)</span>
+                                    <span>$229.96</span>
+                                </div>
+                                <div class="flex justify-between text-gray-600">
+                                    <span>Shipping</span>
+                                    <span class="text-primary font-semibold">Free</span>
+                                </div>
+                                <div class="flex justify-between text-gray-600">
+                                    <span>Tax</span>
+                                    <span>$18.40</span>
+                                </div>
+                                <div class="flex justify-between text-sm text-primary">
+                                    <span>Discount (SAVE20)</span>
+                                    <span>-$45.99</span>
+                                </div>
+                                <div class="border-t pt-3">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-xl font-bold text-gray-900">Total</span>
+                                        <span class="text-2xl font-bold text-primary">$202.37</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Promo Code -->
+                        <div class="mt-6 p-4 bg-primary-50 rounded-lg">
+                            <div class="flex items-center text-sm text-primary-700 mb-2">
+                                <i data-feather="tag" class="w-4 h-4 mr-2"></i>
+                                <span class="font-semibold">Promo Code Applied</span>
+                            </div>
+                            <p class="text-sm text-primary-600">SAVE20 - 20% off your order</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Checkout Form -->
+                <div class="lg:col-span-2">
+                    <div class="bg-white rounded-2xl shadow-lg p-8">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-8 flex items-center">
+                            <i data-feather="user" class="w-6 h-6 mr-3 text-primary"></i>
+                            Guest Checkout
+                        </h2>
+                        
+                        <form id="checkoutForm" class="space-y-6">
+                            <!-- Personal Information -->
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div class="relative">
+                                    <label for="guest_name" class="block text-sm font-semibold text-gray-700 mb-2">
+                                        Full Name <span class="text-red-500">*</span>
+                                    </label>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                            <i data-feather="user" class="w-5 h-5 text-gray-400"></i>
+                                        </div>
+                                        <input 
+                                            type="text" 
+                                            id="guest_name" 
+                                            name="guest_name"
+                                            required
+                                            placeholder="Enter your full name"
+                                            class="w-full pl-12 pr-4 py-4 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                                        >
+                                    </div>
+                                </div>
+                                
+                                <div class="relative">
+                                    <label for="guest_phone" class="block text-sm font-semibold text-gray-700 mb-2">
+                                        Phone Number <span class="text-red-500">*</span>
+                                    </label>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                            <i data-feather="phone" class="w-5 h-5 text-gray-400"></i>
+                                        </div>
+                                        <input 
+                                            type="tel" 
+                                            id="guest_phone" 
+                                            name="guest_phone"
+                                            required
+                                            placeholder="Enter your phone number"
+                                            class="w-full pl-12 pr-4 py-4 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Email -->
+                            <div class="relative">
+                                <label for="guest_email" class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Email Address <span class="text-red-500">*</span>
+                                </label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                        <i data-feather="mail" class="w-5 h-5 text-gray-400"></i>
+                                    </div>
+                                    <input 
+                                        type="email" 
+                                        id="guest_email" 
+                                        name="guest_email"
+                                        required
+                                        placeholder="Enter your email address"
+                                        class="w-full pl-12 pr-4 py-4 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                                    >
+                                </div>
+                            </div>
+                            
+                            <!-- Address -->
+                            <div class="relative">
+                                <label for="guest_address" class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Delivery Address <span class="text-red-500">*</span>
+                                </label>
+                                <div class="relative">
+                                    <div class="absolute top-4 left-4 pointer-events-none">
+                                        <i data-feather="map-pin" class="w-5 h-5 text-gray-400"></i>
+                                    </div>
+                                    <textarea 
+                                        id="guest_address" 
+                                        name="guest_address"
+                                        required
+                                        rows="4"
+                                        placeholder="Enter your complete delivery address including street, city, state, and postal code"
+                                        class="w-full pl-12 pr-4 py-4 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
+                                    ></textarea>
+                                </div>
+                            </div>
+                            
+                            <!-- Order Notes -->
+                            <div class="relative">
+                                <label for="order_notes" class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Order Notes (Optional)
+                                </label>
+                                <div class="relative">
+                                    <div class="absolute top-4 left-4 pointer-events-none">
+                                        <i data-feather="message-circle" class="w-5 h-5 text-gray-400"></i>
+                                    </div>
+                                    <textarea 
+                                        id="order_notes" 
+                                        name="order_notes"
+                                        rows="3"
+                                        placeholder="Any special instructions or notes for your order?"
+                                        class="w-full pl-12 pr-4 py-4 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
+                                    ></textarea>
+                                </div>
+                            </div>
+                            
+                            <!-- Terms and Conditions -->
+                            <div class="flex items-start space-x-3">
+                                <input 
+                                    type="checkbox" 
+                                    id="terms" 
+                                    name="terms"
+                                    required
+                                    class="w-5 h-5 text-primary border-gray-300 rounded focus:ring-primary focus:ring-2"
+                                >
+                                <label for="terms" class="text-sm text-gray-700">
+                                    I agree to the <a href="#" class="text-primary hover:text-primary-dark font-semibold">Terms & Conditions</a> 
+                                    and <a href="#" class="text-primary hover:text-primary-dark font-semibold">Privacy Policy</a>
+                                    <span class="text-red-500">*</span>
+                                </label>
+                            </div>
+                            
+                            <!-- Newsletter Subscription -->
+                            <div class="flex items-start space-x-3">
+                                <input 
+                                    type="checkbox" 
+                                    id="newsletter" 
+                                    name="newsletter"
+                                    class="w-5 h-5 text-primary border-gray-300 rounded focus:ring-primary focus:ring-2"
+                                >
+                                <label for="newsletter" class="text-sm text-gray-700">
+                                    Subscribe to our newsletter for exclusive offers and updates
+                                </label>
+                            </div>
+                            
+                            <!-- Book Now Button -->
+                            <div class="pt-6">
+                                <button 
+                                    type="submit" 
+                                    id="bookNowBtn"
+                                    class="w-full bg-primary text-white py-4 px-8 rounded-xl font-bold text-lg hover:bg-primary-dark transition-all duration-300 transform hover:scale-[1.02] shadow-lg hover:shadow-xl flex items-center justify-center space-x-3"
+                                >
+                                    <i data-feather="credit-card" class="w-6 h-6"></i>
+                                    <span>Book Now - $202.37</span>
+                                </button>
+                            </div>
+                        </form>
+                        
+                        <!-- Security Features -->
+                        <div class="mt-8 pt-8 border-t">
+                            <div class="grid md:grid-cols-3 gap-4">
+                                <div class="flex items-center space-x-3 text-sm text-gray-600">
+                                    <div class="w-10 h-10 bg-primary-50 rounded-full flex items-center justify-center">
+                                        <i data-feather="shield" class="w-5 h-5 text-primary"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-900">Secure Payment</p>
+                                        <p>SSL encrypted checkout</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center space-x-3 text-sm text-gray-600">
+                                    <div class="w-10 h-10 bg-primary-50 rounded-full flex items-center justify-center">
+                                        <i data-feather="truck" class="w-5 h-5 text-primary"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-900">Free Shipping</p>
+                                        <p>On orders over $50</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center space-x-3 text-sm text-gray-600">
+                                    <div class="w-10 h-10 bg-primary-50 rounded-full flex items-center justify-center">
+                                        <i data-feather="rotate-ccw" class="w-5 h-5 text-primary"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-900">Easy Returns</p>
+                                        <p>30-day return policy</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+     <footer class="bg-gray-900 text-white py-16">
+        <div class="container mx-auto px-6">
+            <div class="grid lg:grid-cols-4 md:grid-cols-2 gap-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
+                            <i data-feather="shopping-bag" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <span class="text-2xl font-bold">GreenStyle</span>
+                    </div>
+                    <p class="text-gray-400 mb-6">Sustainable fashion for a better tomorrow. Quality clothing with environmental responsibility.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                            <i data-feather="facebook" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                            <i data-feather="twitter" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                            <i data-feather="instagram" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-lg mb-6">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">About Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Contact</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Size Guide</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Returns</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-lg mb-6">Categories</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Men's Clothing</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Women's Clothing</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Accessories</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Shoes</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-lg mb-6">Customer Service</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-center text-gray-400">
+                            <i data-feather="phone" class="w-4 h-4 mr-2"></i>
+                            +1 (555) 123-4567
+                        </li>
+                        <li class="flex items-center text-gray-400">
+                            <i data-feather="mail" class="w-4 h-4 mr-2"></i>
+                            support@greenstyle.com
+                        </li>
+                        <li class="flex items-center text-gray-400">
+                            <i data-feather="map-pin" class="w-4 h-4 mr-2"></i>
+                            123 Fashion St, NY 10001
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center">
+                <p class="text-gray-400">&copy; 2024 GreenStyle. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Feather Icons
+        feather.replace();
+
+        // Form validation and submission
+        const checkoutForm = document.getElementById('checkoutForm');
+        const bookNowBtn = document.getElementById('bookNowBtn');
+
+        checkoutForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(checkoutForm);
+            const orderData = {
+                guest_name: formData.get('guest_name'),
+                guest_email: formData.get('guest_email'),
+                guest_phone: formData.get('guest_phone'),
+                guest_address: formData.get('guest_address'),
+                order_notes: formData.get('order_notes') || '',
+                newsletter: formData.get('newsletter') === 'on',
+                terms: formData.get('terms') === 'on'
+            };
+            
+            // Validate required fields
+            if (!orderData.guest_name || !orderData.guest_email || !orderData.guest_phone || !orderData.guest_address || !orderData.terms) {
+                alert('Please fill in all required fields and accept the terms & conditions.');
+                return;
+            }
+            
+            // Show loading state
+            bookNowBtn.innerHTML = `
+                <div class="flex items-center space-x-3">
+                    <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
+                    <span>Processing Order...</span>
+                </div>
+            `;
+            bookNowBtn.disabled = true;
+            
+            // Simulate order processing
+            setTimeout(() => {
+                // Success state
+                bookNowBtn.innerHTML = `
+                    <div class="flex items-center space-x-3">
+                        <i data-feather="check" class="w-6 h-6"></i>
+                        <span>Order Placed Successfully!</span>
+                    </div>
+                `;
+                bookNowBtn.classList.add('bg-green-500');
+                bookNowBtn.classList.remove('bg-primary');
+                feather.replace();
+                
+                // Show success message
+                setTimeout(() => {
+                    alert(`Order confirmed! Thank you ${orderData.guest_name}. You will receive a confirmation email shortly.`);
+                    
+                    // Reset button after demo
+                    setTimeout(() => {
+                        bookNowBtn.innerHTML = `
+                            <i data-feather="credit-card" class="w-6 h-6 mr-3"></i>
+                            <span>Book Now - $202.37</span>
+                        `;
+                        bookNowBtn.classList.remove('bg-green-500');
+                        bookNowBtn.classList.add('bg-primary');
+                        bookNowBtn.disabled = false;
+                        feather.replace();
+                    }, 3000);
+                }, 1000);
+                
+                console.log('Order Data:', orderData);
+            }, 2000);
+        });
+
+        // Real-time form validation
+        const inputs = checkoutForm.querySelectorAll('input[required], textarea[required]');
+        inputs.forEach(input => {
+            input.addEventListener('blur', function() {
+                if (this.value.trim() === '') {
+                    this.classList.add('border-red-300');
+                    this.classList.remove('border-gray-200');
+                } else {
+                    this.classList.remove('border-red-300');
+                    this.classList.add('border-gray-200');
+                }
+            });
+            
+            input.addEventListener('input', function() {
+                if (this.value.trim() !== '') {
+                    this.classList.remove('border-red-300');
+                    this.classList.add('border-gray-200');
+                }
+            });
+        });
+
+        // Email validation
+        const emailInput = document.getElementById('guest_email');
+        emailInput.addEventListener('blur', function() {
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (this.value && !emailPattern.test(this.value)) {
+                this.classList.add('border-red-300');
+                this.setCustomValidity('Please enter a valid email address');
+            } else {
+                this.classList.remove('border-red-300');
+                this.setCustomValidity('');
+            }
+        });
+
+        // Phone number formatting
+        const phoneInput = document.getElementById('guest_phone');
+        phoneInput.addEventListener('input', function() {
+            // Remove all non-digit characters
+            let value = this.value.replace(/\D/g, '');
+            
+            // Format as (XXX) XXX-XXXX
+            if (value.length >= 6) {
+                value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(6, 10)}`;
+            } else if (value.length >= 3) {
+                value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
+            }
+            
+            this.value = value;
+        });
+
+        // Smooth animations on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe form elements
+        document.querySelectorAll('.relative').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.6s ease-out';
+            observer.observe(el);
+        });
+
+        // Auto-save form data to prevent loss
+        const autoSaveData = {};
+        inputs.forEach(input => {
+            input.addEventListener('input', function() {
+                autoSaveData[this.name] = this.value;
+                sessionStorage.setItem('checkoutFormData', JSON.stringify(autoSaveData));
+            });
+        });
+
+        // Restore form data on page load
+        const savedData = sessionStorage.getItem('checkoutFormData');
+        if (savedData) {
+            const parsedData = JSON.parse(savedData);
+            Object.keys(parsedData).forEach(key => {
+                const input = document.querySelector(`[name="${key}"]`);
+                if (input) {
+                    input.value = parsedData[key];
+                }
+            });
+        }
+    </script>
+
+    <style>
+        /* Custom animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .bg-white {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        /* Loading spinner */
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .animate-spin {
+            animation: spin 1s linear infinite;
+        }
+
+        /* Focus states */
+        input:focus, textarea:focus, select:focus {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(68, 181, 12, 0.1), 0 10px 10px -5px rgba(68, 181, 12, 0.04);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #44b50c;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3a9a0a;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            
+            .lg\\:col-span-1,
+            .lg\\:col-span-2 {
+                grid-column: span 1;
+            }
+        }
+    </style>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GreenAuth - Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#44b50c',
+                        'primary-dark': '#3a9a0a',
+                        'primary-light': '#5cc916',
+                        'primary-50': '#f0fcec',
+                        'primary-100': '#dcf7d0',
+                        'primary-200': '#bef0a6',
+                        'primary-500': '#44b50c',
+                        'primary-600': '#3a9a0a',
+                        'primary-700': '#2f7f08'
+                    },
+                    fontFamily: {
+                        'urbanist': ['Urbanist', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-urbanist bg-gradient-to-br from-primary-50 to-white min-h-screen flex items-center justify-center p-4">
+    
+    
+    <!-- Background Decoration -->
+    <div class="absolute inset-0 overflow-hidden">
+        <div class="absolute -top-10 -right-10 w-72 h-72 bg-primary-100 rounded-full opacity-50 blur-3xl"></div>
+        <div class="absolute -bottom-10 -left-10 w-96 h-96 bg-primary-50 rounded-full opacity-50 blur-3xl"></div>
+        <div class="absolute top-1/2 left-1/4 w-32 h-32 bg-primary-200 rounded-full opacity-30 blur-2xl"></div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="relative w-full max-w-md">
+        <!-- Logo Section -->
+        <div class="text-center mb-8">
+            <div class="inline-flex items-center justify-center w-16 h-16 bg-primary rounded-2xl mb-4 shadow-lg">
+                <i data-feather="log-in" class="w-8 h-8 text-white"></i>
+            </div>
+            <h1 class="text-3xl font-bold text-gray-900">Welcome Back</h1>
+            <p class="text-gray-600 mt-2">Sign in to your account</p>
+        </div>
+
+        <!-- Login Container -->
+        <div class="bg-white rounded-3xl shadow-2xl p-8 backdrop-blur-lg border border-white/20">
+            
+            <!-- Login Form -->
+            <form id="loginForm" class="space-y-6">
+                
+                <!-- Email Field -->
+                <div class="relative">
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
+                    <div class="relative group">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <i data-feather="mail" class="w-5 h-5 text-gray-400 group-focus-within:text-primary transition-colors"></i>
+                        </div>
+                        <input type="email" required class="w-full pl-12 pr-4 py-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 bg-gray-50 focus:bg-white" placeholder="Enter your email">
+                    </div>
+                </div>
+
+                <!-- Password Field -->
+                <div class="relative">
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Password</label>
+                    <div class="relative group">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <i data-feather="lock" class="w-5 h-5 text-gray-400 group-focus-within:text-primary transition-colors"></i>
+                        </div>
+                        <input type="password" id="loginPassword" required class="w-full pl-12 pr-12 py-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 bg-gray-50 focus:bg-white" placeholder="Enter your password">
+                        <button type="button" class="absolute inset-y-0 right-0 pr-4 flex items-center" onclick="togglePassword('loginPassword')">
+                            <i data-feather="eye" class="w-5 h-5 text-gray-400 hover:text-primary transition-colors"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Remember Me & Forgot Password -->
+                <div class="flex items-center justify-between">
+                    <label class="flex items-center cursor-pointer">
+                        <input type="checkbox" class="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary">
+                        <span class="ml-2 text-sm text-gray-600">Remember me</span>
+                    </label>
+                    <a href="#" class="text-sm text-primary hover:text-primary-dark font-semibold transition-colors">Forgot password?</a>
+                </div>
+
+                <!-- Login Button -->
+                <a href="home.html"  class="w-full bg-primary text-white py-4 rounded-xl font-semibold hover:bg-primary-dark transition-all duration-300 transform hover:scale-[1.02] shadow-lg hover:shadow-xl flex items-center justify-center group">
+                    
+                    Sign In
+                </a>
+
+                <!-- Social Login -->
+                <div class="relative my-8">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t border-gray-200"></div>
+                    </div>
+                    <div class="relative flex justify-center text-sm">
+                        <span class="px-4 bg-white text-gray-500">Or continue with</span>
+                    </div>
+                </div>
+
+              
+                <!-- Register Link -->
+                <div class="text-center mt-8">
+                    <p class="text-gray-600">
+                        Don't have an account? 
+                        <a href="registration.html" class="text-primary hover:text-primary-dark font-semibold transition-colors">Sign up here</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center mt-8 text-gray-500 text-sm">
+            <p>&copy; 2024 GreenAuth. All rights reserved.</p>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Feather icons
+        
+
+        // Toggle password visibility
+        function togglePassword(fieldId) {
+            const field = document.getElementById(fieldId);
+            const type = field.getAttribute('type') === 'password' ? 'text' : 'password';
+            field.setAttribute('type', type);
+        }
+    </script>
+    <style>
+        /* Custom animations */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .bg-white {
+            animation: slideInUp 0.6s ease-out;
+        }
+
+        /* Loading animation */
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .animate-spin {
+            animation: spin 1s linear infinite;
+        }
+    </style>
+</body>
+</html>

@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GreenStyle - Premium Clothing Store</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#44b50c',
+                        'primary-dark': '#3a9a0a',
+                        'primary-light': '#5cc916',
+                        'primary-50': '#f0fcec',
+                        'primary-100': '#dcf7d0',
+                        'primary-200': '#bef0a6',
+                        'primary-500': '#44b50c',
+                        'primary-600': '#3a9a0a',
+                        'primary-700': '#2f7f08'
+                    },
+                    fontFamily: {
+                        'urbanist': ['Urbanist', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-urbanist bg-white">
+    
+    <!-- Navigation Bar -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50 border-b border-gray-100">
+        <div class="container mx-auto px-6">
+            <div class="flex justify-between items-center py-4">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
+                        <i data-feather="shopping-bag" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <span class="text-2xl font-bold text-gray-800">GreenStyle</span>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden lg:flex items-center space-x-8">
+                    <a href="#" class="text-gray-700 hover:text-primary transition-colors font-medium">Home</a>
+                    
+                    <!-- Clothing Dropdown -->
+                    <div class="relative group">
+                        <button class="flex items-center text-gray-700 hover:text-primary transition-colors font-medium">
+                            Clothing
+                            <i data-feather="chevron-down" class="w-4 h-4 ml-1 group-hover:rotate-180 transition-transform"></i>
+                        </button>
+                        <div class="absolute top-full left-0 mt-2 w-64 bg-white rounded-xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                            <div class="p-4">
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <h3 class="font-semibold text-gray-900 mb-2">Men's</h3>
+                                        <ul class="space-y-1">
+                                            <li><a href="#" class="text-sm text-gray-600 hover:text-primary">T-Shirts</a></li>
+                                            <li><a href="#" class="text-sm text-gray-600 hover:text-primary">Jeans</a></li>
+                                            <li><a href="#" class="text-sm text-gray-600 hover:text-primary">Jackets</a></li>
+                                            <li><a href="#" class="text-sm text-gray-600 hover:text-primary">Suits</a></li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-semibold text-gray-900 mb-2">Women's</h3>
+                                        <ul class="space-y-1">
+                                            <li><a href="#" class="text-sm text-gray-600 hover:text-primary">Dresses</a></li>
+                                            <li><a href="#" class="text-sm text-gray-600 hover:text-primary">Tops</a></li>
+                                            <li><a href="#" class="text-sm text-gray-600 hover:text-primary">Skirts</a></li>
+                                            <li><a href="#" class="text-sm text-gray-600 hover:text-primary">Coats</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <a href="#" class="text-gray-700 hover:text-primary transition-colors font-medium">About Us</a>
+                    <a href="#" class="text-gray-700 hover:text-primary transition-colors font-medium">Contact Us</a>
+                </div>
+                
+                <!-- Icons & Actions -->
+                <div class="flex items-center space-x-4">
+                    <!-- Wishlist -->
+                    <div class="relative">
+                        <button class="p-2 text-gray-700 hover:text-primary transition-colors">
+                            <i data-feather="heart" class="w-6 h-6"></i>
+                        </button>
+                        <span class="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
+                    </div>
+                    
+                    <!-- Cart Dropdown -->
+                    <div class="relative group">
+                        <button class="p-2 text-gray-700 hover:text-primary transition-colors">
+                            <i data-feather="shopping-cart" class="w-6 h-6"></i>
+                        </button>
+                        <span class="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">2</span>
+                        
+                        <!-- Cart Dropdown Modal -->
+                        <div class="absolute top-full right-0 mt-2 w-80 bg-white rounded-xl shadow-2xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                            <div class="p-6">
+                                <h3 class="font-bold text-lg mb-4">Shopping Cart</h3>
+                                
+                                <!-- Cart Items -->
+                                <div class="space-y-4 mb-4">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center">
+                                            <i data-feather="image" class="w-6 h-6 text-gray-400"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h4 class="font-semibold text-sm">Cotton T-Shirt</h4>
+                                            <p class="text-gray-600 text-sm">Size: M, Color: Blue</p>
+                                            <p class="text-primary font-bold">$29.99</p>
+                                        </div>
+                                        <button class="text-gray-400 hover:text-red-500">
+                                            <i data-feather="x" class="w-4 h-4"></i>
+                                        </button>
+                                    </div>
+                                    
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center">
+                                            <i data-feather="image" class="w-6 h-6 text-gray-400"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h4 class="font-semibold text-sm">Denim Jacket</h4>
+                                            <p class="text-gray-600 text-sm">Size: L, Color: Dark Blue</p>
+                                            <p class="text-primary font-bold">$79.99</p>
+                                        </div>
+                                        <button class="text-gray-400 hover:text-red-500">
+                                            <i data-feather="x" class="w-4 h-4"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="border-t pt-4">
+                                    <div class="flex justify-between items-center mb-4">
+                                        <span class="font-semibold">Total:</span>
+                                        <span class="font-bold text-lg text-primary">$109.98</span>
+                                    </div>
+                                    <button class="w-full bg-primary text-white py-3 rounded-lg font-semibold hover:bg-primary-dark transition-colors">
+                                        View Cart
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- User Account -->
+                    <button class="p-2 text-gray-700 hover:text-primary transition-colors">
+                        <i data-feather="user" class="w-6 h-6"></i>
+                    </button>
+                    
+                    <!-- Mobile Menu Toggle -->
+                    <button class="lg:hidden p-2 text-gray-700 hover:text-primary transition-colors">
+                        <i data-feather="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Banner -->
+    <section class="bg-gradient-to-r from-primary-50 via-white to-primary-50 py-20">
+        <div class="container mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-8">
+                    <div class="inline-flex items-center bg-primary-100 text-primary-700 px-4 py-2 rounded-full text-sm font-semibold">
+                        <i data-feather="trending-up" class="w-4 h-4 mr-2"></i>
+                        New Collection 2024
+                    </div>
+                    <h1 class="text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
+                        Sustainable
+                        <span class="text-primary">Fashion</span>
+                        for Everyone
+                    </h1>
+                    <p class="text-xl text-gray-600 leading-relaxed">
+                        Discover our eco-friendly clothing collection made with sustainable materials and ethical practices.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button class="bg-primary text-white px-8 py-4 rounded-full font-semibold hover:bg-primary-dark transition-all duration-300 transform hover:scale-105 shadow-lg">
+                            <i data-feather="shopping-bag" class="w-5 h-5 inline mr-2"></i>
+                            Shop Now
+                        </button>
+                        <button class="border-2 border-primary text-primary px-8 py-4 rounded-full font-semibold hover:bg-primary hover:text-white transition-all duration-300">
+                            <i data-feather="play-circle" class="w-5 h-5 inline mr-2"></i>
+                            Watch Story
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="relative">
+                    <div class="bg-primary-100 rounded-3xl p-8 transform rotate-3 hover:rotate-0 transition-transform duration-500">
+                        <div class="bg-white rounded-2xl p-8 shadow-xl">
+                            <div class="grid grid-cols-2 gap-6">
+                                <div class="text-center p-4 bg-primary-50 rounded-xl">
+                                    <div class="w-16 h-16 bg-gray-200 rounded-lg mx-auto mb-2 flex items-center justify-center">
+                                        <i data-feather="image" class="w-8 h-8 text-gray-400"></i>
+                                    </div>
+                                    <h3 class="font-bold text-gray-800 text-sm">Premium Quality</h3>
+                                </div>
+                                <div class="text-center p-4 bg-primary-50 rounded-xl">
+                                    <div class="w-16 h-16 bg-gray-200 rounded-lg mx-auto mb-2 flex items-center justify-center">
+                                        <i data-feather="image" class="w-8 h-8 text-gray-400"></i>
+                                    </div>
+                                    <h3 class="font-bold text-gray-800 text-sm">Eco-Friendly</h3>
+                                </div>
+                                <div class="text-center p-4 bg-primary-50 rounded-xl">
+                                    <div class="w-16 h-16 bg-gray-200 rounded-lg mx-auto mb-2 flex items-center justify-center">
+                                        <i data-feather="image" class="w-8 h-8 text-gray-400"></i>
+                                    </div>
+                                    <h3 class="font-bold text-gray-800 text-sm">Fast Delivery</h3>
+                                </div>
+                                <div class="text-center p-4 bg-primary-50 rounded-xl">
+                                    <div class="w-16 h-16 bg-gray-200 rounded-lg mx-auto mb-2 flex items-center justify-center">
+                                        <i data-feather="image" class="w-8 h-8 text-gray-400"></i>
+                                    </div>
+                                    <h3 class="font-bold text-gray-800 text-sm">Easy Returns</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filters Section -->
+    <section class="py-8 bg-gray-50 border-b">
+        <div class="container mx-auto px-6">
+            <div class="grid lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 gap-4">
+                <!-- Search -->
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <i data-feather="search" class="w-5 h-5 text-gray-400"></i>
+                    </div>
+                    <input type="text" placeholder="Search products..." class="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all">
+                </div>
+                
+                <!-- Category Dropdown -->
+                <div class="relative">
+                    <select class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all appearance-none bg-white">
+                        <option value="">All Categories</option>
+                        <option value="mens">Men's Clothing</option>
+                        <option value="womens">Women's Clothing</option>
+                        <option value="accessories">Accessories</option>
+                        <option value="shoes">Shoes</option>
+                    </select>
+                    <i data-feather="chevron-down" class="w-4 h-4 absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+                </div>
+                
+                <!-- Min Price -->
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <span class="text-gray-400 text-sm">$</span>
+                    </div>
+                    <input type="number" placeholder="Min Price" class="w-full pl-8 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all">
+                </div>
+                
+                <!-- Max Price -->
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <span class="text-gray-400 text-sm">$</span>
+                    </div>
+                    <input type="number" placeholder="Max Price" class="w-full pl-8 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all">
+                </div>
+                
+                <!-- Filter Button -->
+                <button class="bg-primary text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary-dark transition-all duration-300 flex items-center justify-center">
+                    <i data-feather="filter" class="w-5 h-5 mr-2"></i>
+                    Filter
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="py-16">
+        <div class="container mx-auto px-6">
+            <!-- Section Header -->
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Featured Products</h2>
+                <p class="text-xl text-gray-600">Discover our latest collection of sustainable fashion</p>
+            </div>
+            
+            <!-- Products Grid -->
+            <div class="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-8">
+                <!-- Product Card 1 -->
+                <a href="product.detail.html" class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden">
+                    <div class="relative overflow-hidden">
+                        <div class="w-full h-64 bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
+                            <i data-feather="image" class="w-16 h-16 text-gray-400"></i>
+                        </div>
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-primary text-white px-3 py-1 rounded-full text-sm font-semibold">New</span>
+                        </div>
+                        <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button class="w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors">
+                                <i data-feather="heart" class="w-5 h-5 text-gray-600"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-lg mb-2 text-gray-900">Organic Cotton T-Shirt</h3>
+                        <p class="text-gray-600 text-sm mb-3">Comfortable and sustainable basic tee</p>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-1">
+                                <div class="flex text-yellow-400">
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                </div>
+                                <span class="text-sm text-gray-600">(24)</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="space-x-2">
+                                <span class="text-2xl font-bold text-primary">$29.99</span>
+                                <span class="text-sm text-gray-500 line-through">$39.99</span>
+                            </div>
+                            <button class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-dark transition-colors">
+                                <i data-feather="shopping-cart" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Product Card 2 -->
+                <div class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden">
+                    <div class="relative overflow-hidden">
+                        <div class="w-full h-64 bg-gradient-to-br from-blue-200 to-blue-300 flex items-center justify-center">
+                            <i data-feather="image" class="w-16 h-16 text-blue-400"></i>
+                        </div>
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold">Sale</span>
+                        </div>
+                        <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button class="w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors">
+                                <i data-feather="heart" class="w-5 h-5 text-red-500"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-lg mb-2 text-gray-900">Denim Jacket</h3>
+                        <p class="text-gray-600 text-sm mb-3">Classic denim jacket with modern fit</p>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-1">
+                                <div class="flex text-yellow-400">
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-feather="star" class="w-4 h-4"></i>
+                                </div>
+                                <span class="text-sm text-gray-600">(18)</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="space-x-2">
+                                <span class="text-2xl font-bold text-primary">$79.99</span>
+                                <span class="text-sm text-gray-500 line-through">$99.99</span>
+                            </div>
+                            <button class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-dark transition-colors">
+                                <i data-feather="shopping-cart" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 3 -->
+                <div class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden">
+                    <div class="relative overflow-hidden">
+                        <div class="w-full h-64 bg-gradient-to-br from-pink-200 to-pink-300 flex items-center justify-center">
+                            <i data-feather="image" class="w-16 h-16 text-pink-400"></i>
+                        </div>
+                        <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button class="w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors">
+                                <i data-feather="heart" class="w-5 h-5 text-gray-600"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-lg mb-2 text-gray-900">Summer Dress</h3>
+                        <p class="text-gray-600 text-sm mb-3">Lightweight and breathable summer dress</p>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-1">
+                                <div class="flex text-yellow-400">
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                </div>
+                                <span class="text-sm text-gray-600">(31)</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="space-x-2">
+                                <span class="text-2xl font-bold text-primary">$54.99</span>
+                            </div>
+                            <button class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-dark transition-colors">
+                                <i data-feather="shopping-cart" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 4 -->
+                <div class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden">
+                    <div class="relative overflow-hidden">
+                        <div class="w-full h-64 bg-gradient-to-br from-purple-200 to-purple-300 flex items-center justify-center">
+                            <i data-feather="image" class="w-16 h-16 text-purple-400"></i>
+                        </div>
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-primary text-white px-3 py-1 rounded-full text-sm font-semibold">Popular</span>
+                        </div>
+                        <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button class="w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors">
+                                <i data-feather="heart" class="w-5 h-5 text-gray-600"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-lg mb-2 text-gray-900">Wool Sweater</h3>
+                        <p class="text-gray-600 text-sm mb-3">Cozy merino wool sweater for cold days</p>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-1">
+                                <div class="flex text-yellow-400">
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-feather="star" class="w-4 h-4"></i>
+                                </div>
+                                <span class="text-sm text-gray-600">(42)</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="space-x-2">
+                                <span class="text-2xl font-bold text-primary">$89.99</span>
+                            </div>
+                            <button class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-dark transition-colors">
+                                <i data-feather="shopping-cart" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 5 -->
+                <div class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden">
+                    <div class="relative overflow-hidden">
+                        <div class="w-full h-64 bg-gradient-to-br from-green-200 to-green-300 flex items-center justify-center">
+                            <i data-feather="image" class="w-16 h-16 text-green-400"></i>
+                        </div>
+                        <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button class="w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors">
+                                <i data-feather="heart" class="w-5 h-5 text-gray-600"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-lg mb-2 text-gray-900">Casual Pants</h3>
+                        <p class="text-gray-600 text-sm mb-3">Comfortable everyday casual pants</p>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-1">
+                                <div class="flex text-yellow-400">
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-feather="star" class="w-4 h-4"></i>
+                                </div>
+                                <span class="text-sm text-gray-600">(15)</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="space-x-2">
+                                <span class="text-2xl font-bold text-primary">$64.99</span>
+                            </div>
+                            <button class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-dark transition-colors">
+                                <i data-feather="shopping-cart" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 6 -->
+                <div class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden">
+                    <div class="relative overflow-hidden">
+                        <div class="w-full h-64 bg-gradient-to-br from-yellow-200 to-yellow-300 flex items-center justify-center">
+                            <i data-feather="image" class="w-16 h-16 text-yellow-500"></i>
+                        </div>
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold">Limited</span>
+                        </div>
+                        <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button class="w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors">
+                                <i data-feather="heart" class="w-5 h-5 text-gray-600"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-lg mb-2 text-gray-900">Designer Blazer</h3>
+                        <p class="text-gray-600 text-sm mb-3">Professional blazer for business wear</p>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-1">
+                                <div class="flex text-yellow-400">
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                </div>
+                                <span class="text-sm text-gray-600">(27)</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="space-x-2">
+                                <span class="text-2xl font-bold text-primary">$129.99</span>
+                                <span class="text-sm text-gray-500 line-through">$159.99</span>
+                            </div>
+                            <button class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-dark transition-colors">
+                                <i data-feather="shopping-cart" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 7 -->
+                <div class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden">
+                    <div class="relative overflow-hidden">
+                        <div class="w-full h-64 bg-gradient-to-br from-indigo-200 to-indigo-300 flex items-center justify-center">
+                            <i data-feather="image" class="w-16 h-16 text-indigo-400"></i>
+                        </div>
+                        <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button class="w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors">
+                                <i data-feather="heart" class="w-5 h-5 text-red-500"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-lg mb-2 text-gray-900">Athletic Hoodie</h3>
+                        <p class="text-gray-600 text-sm mb-3">Perfect for workouts and casual wear</p>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-1">
+                                <div class="flex text-yellow-400">
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-feather="star" class="w-4 h-4"></i>
+                                </div>
+                                <span class="text-sm text-gray-600">(33)</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="space-x-2">
+                                <span class="text-2xl font-bold text-primary">$49.99</span>
+                            </div>
+                            <button class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-dark transition-colors">
+                                <i data-feather="shopping-cart" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 8 -->
+                <div class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden">
+                    <div class="relative overflow-hidden">
+                        <div class="w-full h-64 bg-gradient-to-br from-red-200 to-red-300 flex items-center justify-center">
+                            <i data-feather="image" class="w-16 h-16 text-red-400"></i>
+                        </div>
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-primary text-white px-3 py-1 rounded-full text-sm font-semibold">Trending</span>
+                        </div>
+                        <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button class="w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors">
+                                <i data-feather="heart" class="w-5 h-5 text-gray-600"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-lg mb-2 text-gray-900">Vintage Scarf</h3>
+                        <p class="text-gray-600 text-sm mb-3">Elegant silk scarf with vintage pattern</p>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-1">
+                                <div class="flex text-yellow-400">
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                </div>
+                                <span class="text-sm text-gray-600">(19)</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="space-x-2">
+                                <span class="text-2xl font-bold text-primary">$34.99</span>
+                            </div>
+                            <button class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-dark transition-colors">
+                                <i data-feather="shopping-cart" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Load More Button -->
+            <div class="text-center mt-12">
+                <button class="bg-primary text-white px-8 py-4 rounded-full font-semibold hover:bg-primary-dark transition-all duration-300 transform hover:scale-105 shadow-lg">
+                    <i data-feather="refresh-cw" class="w-5 h-5 inline mr-2"></i>
+                    Load More Products
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="bg-primary-50 py-16">
+        <div class="container mx-auto px-6">
+            <div class="text-center max-w-2xl mx-auto">
+                <h3 class="text-3xl font-bold text-gray-900 mb-4">Stay Updated</h3>
+                <p class="text-gray-600 mb-8">Subscribe to our newsletter and be the first to know about new collections and exclusive offers.</p>
+                <div class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+                    <div class="flex-1 relative">
+                        <input type="email" placeholder="Enter your email" class="w-full px-6 py-4 rounded-full border border-gray-200 focus:ring-2 focus:ring-primary focus:border-transparent transition-all">
+                    </div>
+                    <button class="bg-primary text-white px-8 py-4 rounded-full font-semibold hover:bg-primary-dark transition-all duration-300">
+                        Subscribe
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-16">
+        <div class="container mx-auto px-6">
+            <div class="grid lg:grid-cols-4 md:grid-cols-2 gap-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
+                            <i data-feather="shopping-bag" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <span class="text-2xl font-bold">GreenStyle</span>
+                    </div>
+                    <p class="text-gray-400 mb-6">Sustainable fashion for a better tomorrow. Quality clothing with environmental responsibility.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                            <i data-feather="facebook" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                            <i data-feather="twitter" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                            <i data-feather="instagram" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-lg mb-6">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">About Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Contact</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Size Guide</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Returns</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-lg mb-6">Categories</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Men's Clothing</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Women's Clothing</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Accessories</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Shoes</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-lg mb-6">Customer Service</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-center text-gray-400">
+                            <i data-feather="phone" class="w-4 h-4 mr-2"></i>
+                            +1 (555) 123-4567
+                        </li>
+                        <li class="flex items-center text-gray-400">
+                            <i data-feather="mail" class="w-4 h-4 mr-2"></i>
+                            support@greenstyle.com
+                        </li>
+                        <li class="flex items-center text-gray-400">
+                            <i data-feather="map-pin" class="w-4 h-4 mr-2"></i>
+                            123 Fashion St, NY 10001
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center">
+                <p class="text-gray-400">&copy; 2024 GreenStyle. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Feather Icons
+        feather.replace();
+
+        // Cart functionality
+        let cartItems = [];
+        let wishlistItems = [];
+
+        // Add to cart function
+        function addToCart(productId, name, price, image) {
+            const item = { productId, name, price, image, quantity: 1 };
+            const existingItem = cartItems.find(item => item.productId === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cartItems.push(item);
+            }
+            
+            updateCartUI();
+        }
+
+        // Add to wishlist function
+        function addToWishlist(productId, name, price, image) {
+            if (!wishlistItems.find(item => item.productId === productId)) {
+                wishlistItems.push({ productId, name, price, image });
+                updateWishlistUI();
+            }
+        }
+
+        // Update cart UI
+        function updateCartUI() {
+            const cartCount = document.querySelector('.group button span');
+            if (cartCount) {
+                cartCount.textContent = cartItems.reduce((total, item) => total + item.quantity, 0);
+            }
+        }
+
+        // Update wishlist UI
+        function updateWishlistUI() {
+            const wishlistCount = document.querySelector('.relative button span');
+            if (wishlistCount) {
+                wishlistCount.textContent = wishlistItems.length;
+            }
+        }
+
+        // Filter functionality
+        const searchInput = document.querySelector('input[placeholder="Search products..."]');
+        const categorySelect = document.querySelector('select');
+        const minPriceInput = document.querySelector('input[placeholder="Min Price"]');
+        const maxPriceInput = document.querySelector('input[placeholder="Max Price"]');
+        const filterButton = document.querySelector('button[class*="bg-primary"]');
+
+        filterButton.addEventListener('click', () => {
+            const searchTerm = searchInput.value.toLowerCase();
+            const category = categorySelect.value;
+            const minPrice = parseFloat(minPriceInput.value) || 0;
+            const maxPrice = parseFloat(maxPriceInput.value) || Infinity;
+
+            // Here you would typically filter the products
+            console.log('Filtering with:', { searchTerm, category, minPrice, maxPrice });
+            
+            // Show loading state
+            filterButton.innerHTML = '<i data-feather="loader" class="w-5 h-5 mr-2 animate-spin"></i>Filtering...';
+            
+            setTimeout(() => {
+                filterButton.innerHTML = '<i data-feather="filter" class="w-5 h-5 mr-2"></i>Filter';
+                feather.replace();
+                alert('Filter applied! (Demo)');
+            }, 1000);
+        });
+
+        // Product card interactions
+        document.querySelectorAll('.group').forEach((card, index) => {
+            const addToCartBtn = card.querySelector('button[class*="bg-primary"]:last-child');
+            const wishlistBtn = card.querySelector('button[class*="bg-white"]');
+            
+            if (addToCartBtn) {
+                addToCartBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const productName = card.querySelector('h3').textContent;
+                    const productPrice = card.querySelector('.text-primary').textContent;
+                    
+                    // Add animation
+                    addToCartBtn.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        addToCartBtn.style.transform = 'scale(1)';
+                    }, 150);
+                    
+                    addToCart(`product-${index}`, productName, productPrice, '');
+                    
+                    // Show success feedback
+                    const originalContent = addToCartBtn.innerHTML;
+                    addToCartBtn.innerHTML = '<i data-feather="check" class="w-4 h-4"></i>';
+                    addToCartBtn.classList.add('bg-green-500');
+                    
+                    setTimeout(() => {
+                        addToCartBtn.innerHTML = originalContent;
+                        addToCartBtn.classList.remove('bg-green-500');
+                        feather.replace();
+                    }, 1000);
+                });
+            }
+            
+            if (wishlistBtn) {
+                wishlistBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const heartIcon = wishlistBtn.querySelector('i');
+                    const productName = card.querySelector('h3').textContent;
+                    const productPrice = card.querySelector('.text-primary').textContent;
+                    
+                    if (heartIcon.classList.contains('text-red-500')) {
+                        heartIcon.classList.remove('text-red-500');
+                        heartIcon.classList.add('text-gray-600');
+                    } else {
+                        heartIcon.classList.add('text-red-500');
+                        heartIcon.classList.remove('text-gray-600');
+                        addToWishlist(`product-${index}`, productName, productPrice, '');
+                    }
+                });
+            }
+        });
+
+        // Newsletter subscription
+        const newsletterForm = document.querySelector('.flex.flex-col.sm\\:flex-row.gap-4');
+        if (newsletterForm) {
+            const submitBtn = newsletterForm.querySelector('button');
+            const emailInput = newsletterForm.querySelector('input');
+            
+            submitBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const email = emailInput.value;
+                
+                if (email && email.includes('@')) {
+                    submitBtn.innerHTML = 'Subscribing...';
+                    submitBtn.disabled = true;
+                    
+                    setTimeout(() => {
+                        submitBtn.innerHTML = 'Subscribed!';
+                        emailInput.value = '';
+                        
+                        setTimeout(() => {
+                            submitBtn.innerHTML = 'Subscribe';
+                            submitBtn.disabled = false;
+                        }, 2000);
+                    }, 1500);
+                } else {
+                    alert('Please enter a valid email address');
+                }
+            });
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Load more products
+        const loadMoreBtn = document.querySelector('button[class*="Load More"]');
+        if (loadMoreBtn) {
+            loadMoreBtn.addEventListener('click', () => {
+                loadMoreBtn.innerHTML = '<i data-feather="loader" class="w-5 h-5 inline mr-2 animate-spin"></i>Loading...';
+                
+                setTimeout(() => {
+                    loadMoreBtn.innerHTML = '<i data-feather="refresh-cw" class="w-5 h-5 inline mr-2"></i>Load More Products';
+                    feather.replace();
+                    alert('More products loaded! (Demo)');
+                }, 2000);
+            });
+        }
+    </script>
+
+    <style>
+        /* Custom animations */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .group {
+            animation: slideInUp 0.6s ease-out;
+        }
+
+        /* Loading animation */
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .animate-spin {
+            animation: spin 1s linear infinite;
+        }
+
+        /* Hover effects for cards */
+        .group:hover {
+            transform: translateY(-8px) scale(1.02);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #44b50c;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3a9a0a;
+        }
+    </style>
+</body>
+</html>
